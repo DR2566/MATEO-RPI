@@ -10,4 +10,4 @@ def get_companies():
     return json.dumps(get_values())
 
 if __name__ == "__main__":
-    api.run()
+    api.run(host="172.20.2.190", port='1111')
