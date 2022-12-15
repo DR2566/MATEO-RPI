@@ -12,6 +12,10 @@ api = Flask(__name__)
 
 @api.route('/test', methods=['GET'])
 def get_companies():
+    try:
+        result = json.dumps(testing.test_everything())
+    except:
+        result = [{""}]
     return json.dumps(testing.test_everything())
 
 if __name__ == "__main__":

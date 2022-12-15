@@ -15,7 +15,8 @@ class TEST:
         self.ads = ADS.ADS1015(self.i2c)             # variable to access ads1115
         self.ads_val = AnalogIn(self.ads, ADS.P0)    # variable for output channel of uv sensor
         self.ads_ref = AnalogIn(self.ads, ADS.P1)    # variable for reference channel of UV sensor
-        self.iter_num = 5
+        self.iter_num = 2
+        self.sleep_time = 200/1000
         self.current_temp = None
         self.current_press = None
         self.current_humid = None
@@ -32,7 +33,7 @@ class TEST:
             temp = self.bme.get_temperature()
             if i != 0:
                 temps_list.append(temp)
-            time.sleep(1)
+            time.sleep(self.sleep_time)
         self.current_temp = round(get_avg(temps_list),2)
         return self.current_temp
         
@@ -42,7 +43,7 @@ class TEST:
             press = self.bme.get_pressure()
             if i != 0:
                 press_list.append(press)
-            time.sleep(1)
+            time.sleep(self.sleep_time)
         self.current_press = round(get_avg(press_list),2)
         return self.current_press
 
@@ -52,7 +53,7 @@ class TEST:
             humid = self.bme.get_humidity()
             if i != 0:
                 humid_list.append(humid)
-            time.sleep(1)
+            time.sleep(self.sleep_time)
         self.current_humid = round(get_avg(humid_list),2)
         return self.current_humid
     
@@ -62,7 +63,7 @@ class TEST:
             uv = self.v2mw()
             if i !=0:
                 uv_list.append(uv)
-            time.sleep(1)
+            time.sleep(self.sleep_time)
         self.current_uv = round(get_avg(uv_list),2)
         return self.current_uv
     
@@ -70,7 +71,7 @@ class TEST:
         return (self.ads_val.voltage*3.3/self.ads_ref.voltage - self.UV_IN_MIN) * (self.UV_OUT_MAX - self.UV_OUT_MIN) / (self.UV_IN_MAX - self.UV_IN_MIN) + self.UV_OUT_MIN
         
     def test_everything(self):   
-        return [{"uv": self.get_uv(), "temperature": self.get_temp(), "pressure": self.get_press(), "humidity": self.get_humid()}]
+        return [{"status": 1, "uv": self.get_uv(), "temperature": self.get_temp(), "pressure": self.get_press(), "humidity": self.get_humid()}]
 
 def get_avg(list_num):
     return sum(list_num) / len(list_num)
