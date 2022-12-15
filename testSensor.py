@@ -70,7 +70,7 @@ class TEST:
         return (self.ads_val.voltage*3.3/self.ads_ref.voltage - self.UV_IN_MIN) * (self.UV_OUT_MAX - self.UV_OUT_MIN) / (self.UV_IN_MAX - self.UV_IN_MIN) + self.UV_OUT_MIN
         
     def test_everything(self):   
-        return self.get_uv(), self.get_temp(), self.get_press(), self.get_humid()
+        return {"uv": self.get_uv(), "temperature": self.get_temp(), "pressure": self.get_press(), "humidity": self.get_humid()}
 
 def get_avg(list_num):
     return sum(list_num) / len(list_num)
