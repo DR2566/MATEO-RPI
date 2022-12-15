@@ -34,6 +34,7 @@ class TEST:
                 temps_list.append(temp)
             time.sleep(1)
         self.current_temp = round(get_avg(temps_list),2)
+        return self.current_temp
         
     def get_press(self):
         press_list = []
@@ -43,6 +44,7 @@ class TEST:
                 press_list.append(press)
             time.sleep(1)
         self.current_press = round(get_avg(press_list),2)
+        return self.current_press
 
     def get_humid(self):
         humid_list = []
@@ -52,6 +54,7 @@ class TEST:
                 humid_list.append(humid)
             time.sleep(1)
         self.current_humid = round(get_avg(humid_list),2)
+        return self.current_humid
     
     def get_uv(self):
         uv_list = []
@@ -61,6 +64,7 @@ class TEST:
                 uv_list.append(uv)
             time.sleep(1)
         self.current_uv = round(get_avg(uv_list),2)
+        return self.current_uv
     
     def v2mw(self): 
         return (self.ads_val.voltage*3.3/self.ads_ref.voltage - self.UV_IN_MIN) * (self.UV_OUT_MAX - self.UV_OUT_MIN) / (self.UV_IN_MAX - self.UV_IN_MIN) + self.UV_OUT_MIN
