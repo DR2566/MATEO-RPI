@@ -84,5 +84,5 @@ def convert_float(float_num): # we want to change "." separator substitude to ",
             new_int += letter
     return new_int
 
-testing = TEST()
-print(testing.test_everything())
+# testing = TEST()
+# print(testing.test_everything())

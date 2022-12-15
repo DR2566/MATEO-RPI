@@ -1,4 +1,9 @@
 from flask import Flask, json
+import testSensor
+
+testing = testSensor.TEST()
+print(testing.test_everything())
+
 
 def get_values():
     return [{"id": 1, "message": "hello there"}]
