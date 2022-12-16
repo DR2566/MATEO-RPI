@@ -11,6 +11,10 @@ except Exception as e:
     print('some of the modules are not installed')
 class TEST:
     def __init__(self):
+        self.uv = None 
+        self.temp = None
+        self.press = None
+        self.humid = None
 
         try:
             self.ads_val = AnalogIn(self.ads, ADS.P0)    # variable for output channel of uv sensor
@@ -50,7 +54,6 @@ class TEST:
             except Exception as e:
                 return 'error'
 
-        
     def get_press(self):
         if self.press != 'error':
             try:
@@ -97,10 +100,10 @@ class TEST:
         return (self.ads_val.voltage*3.3/self.ads_ref.voltage - self.UV_IN_MIN) * (self.UV_OUT_MAX - self.UV_OUT_MIN) / (self.UV_IN_MAX - self.UV_IN_MIN) + self.UV_OUT_MIN
         
     def test_everything(self):   
-        self.get_uv()
-        self.get_temp()
-        self.get_press()
-        self.get_humid()
+        self.uv = self.get_uv()
+        self.temp = self.get_temp()
+        self.press = self.get_press()
+        self.humid = self.get_humid()
         return [{"Uv": self.uv, "Temperature": self.temp, "Pressure": self.press, "Humidity": self.humid}]
 
 def get_avg(list_num):
