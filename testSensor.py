@@ -17,10 +17,10 @@ class TEST:
         self.humid = None
 
         try:
+            self.ads = ADS.ADS1015(self.i2c)             # variable to access ads1115
             self.ads_val = AnalogIn(self.ads, ADS.P0)    # variable for output channel of uv sensor
             self.ads_ref = AnalogIn(self.ads, ADS.P1)    # variable for reference channel of UV sensor
             self.i2c = busio.I2C(board.SCL, board.SDA)   # Create the I2C bus for UV
-            self.ads = ADS.ADS1015(self.i2c)             # variable to access ads1115
         except Exception:
             self.uv = 'error'
 
