@@ -13,6 +13,7 @@ def get_companies():
     try:
         result = json.dumps(testing.test_everything())
     except Exception as e:
+        testSensor.write_error(e)
         result = json.dumps([{"message": "something went wrong"}])
     return json.dumps(result)
 

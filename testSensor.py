@@ -17,17 +17,19 @@ class TEST:
         self.humid = None
 
         try:
+            self.i2c = busio.I2C(board.SCL, board.SDA)   # Create the I2C bus for UV
             self.ads = ADS.ADS1015(self.i2c)             # variable to access ads1115
             self.ads_val = AnalogIn(self.ads, ADS.P0)    # variable for output channel of uv sensor
             self.ads_ref = AnalogIn(self.ads, ADS.P1)    # variable for reference channel of UV sensor
-            self.i2c = busio.I2C(board.SCL, board.SDA)   # Create the I2C bus for UV
-        except Exception:
+        except Exception as e:
+            write_error(e)
             self.uv = 'error'
 
         try:
             self.bus = SMBus(1)
             self.bme = BME280(i2c_dev=self.bus)
-        except Exception:
+        except Exception as e:
+            write_error(e)
             self.temp = 'error'    
             self.press = 'error'       
             self.humid = 'error'    
@@ -50,9 +52,10 @@ class TEST:
                         temps_list.append(temp)
                     time.sleep(self.sleep_time)
                 temp = round(get_avg(temps_list),2)
-                return temp
+                self.temp = temp
             except Exception as e:
-                return 'error'
+                write_error(e)
+                self.temp = 'error'
 
     def get_press(self):
         if self.press != 'error':
@@ -64,9 +67,10 @@ class TEST:
                         press_list.append(press)
                     time.sleep(self.sleep_time)
                 press = round(get_avg(press_list),2)
-                return press
+                self.press = press
             except Exception as e:
-                return 'error'
+                write_error(e)
+                self.press = 'error'
 
     def get_humid(self):
         if self.humid != 'error':
@@ -78,9 +82,10 @@ class TEST:
                         humid_list.append(humid)
                     time.sleep(self.sleep_time)
                 humid = round(get_avg(humid_list),2)
-                return humid
+                self.humid = humid
             except Exception as e:
-                return 'error'
+                write_error(e)
+                self.humid = 'error'
     
     def get_uv(self):
         if self.uv != 'error':
@@ -92,20 +97,26 @@ class TEST:
                         uv_list.append(uv)
                     time.sleep(self.sleep_time)
                 uv = round(get_avg(uv_list),2)
-                return uv
+                self.uv = uv
             except Exception as e:
-                return 'error'
+                write_error(e)
+                self.uv = 'error'
+        
     
     def v2mw(self): 
         return (self.ads_val.voltage*3.3/self.ads_ref.voltage - self.UV_IN_MIN) * (self.UV_OUT_MAX - self.UV_OUT_MIN) / (self.UV_IN_MAX - self.UV_IN_MIN) + self.UV_OUT_MIN
         
     def test_everything(self):   
-        self.uv = self.get_uv()
-        self.temp = self.get_temp()
-        self.press = self.get_press()
-        self.humid = self.get_humid()
+        self.get_uv()
+        self.get_temp()
+        self.get_press()
+        self.get_humid()
         return [{"Uv": self.uv, "Temperature": self.temp, "Pressure": self.press, "Humidity": self.humid}]
 
+def write_error(error):
+    file = open('api.log', 'a')
+    file.write(str(error)+'\n')
+    file.close()
 def get_avg(list_num):
     return sum(list_num) / len(list_num)
 def convert_float(float_num): # we want to change "." separator substitude to "," for excel

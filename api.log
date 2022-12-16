@@ -1,0 +1,20 @@
+
+name 'sss' is not defined
+name 'sss' is not defined
+'TEST' object has no attribute 'test_efverything'
+'TEST' object has no attribute 'test_deverything'
+'TEST' object has no attribute 'test_deverything'
+'TEST' object has no attribute 'test_deverything'
+'TEST' object has no attribute 'test_deverything'
+'TEST' object has no attribute 'test_deverything'
+'TEST' object has no attribute 'test_deverything'
+'TEST' object has no attribute 'test_deverything'
+'TEST' object has no attribute 'test_deverything'
+'TEST' object has no attribute 'test_deverything'
+'TEST' object has no attribute 'test_deverything'
+ * Serving Flask app 'restAPI'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://172.20.2.190:1111
+[33mPress CTRL+C to quit[0m
+172.20.50.13 - - [16/Dec/2022 21:54:44] "GET /test HTTP/1.1" 200 -
