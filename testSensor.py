@@ -101,7 +101,7 @@ class TEST:
         self.get_temp()
         self.get_press()
         self.get_humid()
-        return [{"uv": self.uv, "temperature": self.temp, "pressure": self.press, "humidity": self.humid}]
+        return [{"Uv": self.uv, "Temperature": self.temp, "Pressure": self.press, "Humidity": self.humid}]
 
 def get_avg(list_num):
     return sum(list_num) / len(list_num)
