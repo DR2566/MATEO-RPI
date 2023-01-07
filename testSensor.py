@@ -106,12 +106,19 @@ class TEST:
     def v2mw(self): 
         return (self.ads_val.voltage*3.3/self.ads_ref.voltage - self.UV_IN_MIN) * (self.UV_OUT_MAX - self.UV_OUT_MIN) / (self.UV_IN_MAX - self.UV_IN_MIN) + self.UV_OUT_MIN
         
-    def test_everything(self):   
+    def test_everything(self): 
+        self.anulate_values()  
         self.get_uv()
         self.get_temp()
         self.get_press()
         self.get_humid()
         return [{"Uv": self.uv, "Temperature": self.temp, "Pressure": self.press, "Humidity": self.humid}]
+    
+    def anulate_values(self):
+        self.uv = None 
+        self.temp = None
+        self.press = None
+        self.humid = None
 
 def write_error(error):
     file = open('api.log', 'a')
